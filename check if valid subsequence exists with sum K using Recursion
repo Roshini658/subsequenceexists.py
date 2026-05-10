@@ -1,0 +1,50 @@
+# Function to check if subsequence with sum K exists
+def subsequenceExists(nums, k):
+
+    # Recursive function
+    def solve(index, subset, total):
+
+        # If sum becomes k
+        if total == k:
+            return True   # subsequence exists
+
+        # If all elements processed
+        if index == len(nums):
+            return False
+
+        # ---------- TAKE ELEMENT ----------
+
+        # Add current element into subsequence
+        subset.append(nums[index])
+
+        # Check by taking current element
+        if solve(index + 1,
+                 subset,
+                 total + nums[index]):
+            return True
+
+        # ---------- BACKTRACK ----------
+
+        # Remove last added element
+        subset.pop()
+
+        # ---------- DO NOT TAKE ELEMENT ----------
+
+        # Check without taking current element
+        if solve(index + 1,
+                 subset,
+                 total):
+            return True
+
+        # No valid subsequence found
+        return False
+
+    # Start recursion
+    return solve(0, [], 0)
+
+
+# Example
+nums = [1, 2, 1]
+k = 2
+
+print(subsequenceExists(nums, k))
